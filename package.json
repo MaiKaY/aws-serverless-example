@@ -1,0 +1,39 @@
+{
+    "name": "aws-serverless-example",
+    "authors": [
+        {
+            "name": "Maik Schmidt",
+            "email": "maik.schmidt.hl@gmail.com"
+        }
+    ],
+    "scripts": {
+        "eslint": "./node_modules/.bin/eslint src/**",
+        "flow": "./node_modules/.bin/flow",
+        "start": "DEVELOPMENT_MODE=true nodemon --verbose --exec \"babel-node ./src/infrastructure/client/api/app.js\""
+    },
+    "husky": {
+        "hooks": {
+            "pre-push": "npm run eslint && npm run flow"
+        }
+    },
+    "dependencies": {
+        "aws-serverless-express": "3.2.0",
+        "body-parser": "1.18.3",
+        "cors": "2.8.4",
+        "express": "4.16.3",
+        "morgan": "1.9.0"
+    },
+    "devDependencies": {
+        "babel-cli": "6.26.0",
+        "babel-eslint": "8.2.3",
+        "babel-preset-env": "1.7.0",
+        "babel-preset-flow": "6.23.0",
+        "babel-preset-stage-0": "6.24.1",
+        "eslint": "4.19.1",
+        "eslint-config-airbnb-base": "12.1.0",
+        "eslint-plugin-import": "2.12.0",
+        "flow-bin": "0.74.0",
+        "husky": "1.0.0-rc.9",
+        "nodemon": "1.17.5"
+    }
+}

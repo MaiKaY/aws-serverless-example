@@ -6,10 +6,20 @@
             "email": "maik.schmidt.hl@gmail.com"
         }
     ],
+    "config": {
+        "AWS_REGION": "eu-west-1",
+        "AWS_CF_TEMPLATE_S3_BUCKET": "PUT S3 BUCKET NAME HERE",
+        "AWS_CF_STACK_NAME": "AWS-SERVERLESS-EXAMPLE"
+    },
     "scripts": {
         "eslint": "./node_modules/.bin/eslint src/**",
         "flow": "./node_modules/.bin/flow",
-        "start": "DEVELOPMENT_MODE=true nodemon --verbose --exec \"babel-node ./src/infrastructure/client/api/app.js\""
+        "start": "DEVELOPMENT_MODE=true nodemon --verbose --exec \"babel-node ./src/infrastructure/client/api/app.js\"",
+        "build": "./node_modules/.bin/babel src -d dist/src",
+        "postbuild": "aws cloudformation package --s3-bucket $npm_package_config_AWS_CF_TEMPLATE_S3_BUCKET --s3-prefix aws-serverless-example --template-file ./infrastructure.yml --output-template-file ./infrastructure-packaged.yml",
+        "aws:install": "npm run build && aws cloudformation create-stack --stack-name $npm_package_config_AWS_CF_STACK_NAME --template-body file:///$PWD/infrastructure-packaged.yml --capabilities CAPABILITY_IAM --region $npm_package_config_AWS_REGION",
+        "aws:update": "npm run build && aws cloudformation update-stack --stack-name $npm_package_config_AWS_CF_STACK_NAME --template-body file:///$PWD/infrastructure-packaged.yml --capabilities CAPABILITY_IAM --region $npm_package_config_AWS_REGION",
+        "aws:uninstall": "aws cloudformation delete-stack --stack-name $npm_package_config_AWS_CF_STACK_NAME --region $npm_package_config_AWS_REGION"
     },
     "husky": {
         "hooks": {

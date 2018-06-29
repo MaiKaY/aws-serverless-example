@@ -16,7 +16,7 @@ Resources:
   ApiLambda:
     Type: AWS::Lambda::Function
     Properties:
-      Handler: dist/src/infrastructure/client/aws/lambda/api.handler
+      Handler: dist/src/api-lambda.handler
       Role: !GetAtt ApiLambdaExecutionRole.Arn
       Runtime: nodejs8.10
       MemorySize: 128

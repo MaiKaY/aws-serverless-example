@@ -2,7 +2,7 @@
 
 import AwsServerlessExpress from 'aws-serverless-express';
 
-import app from '../../api/app';
+import app from './api';
 
 const server = AwsServerlessExpress.createServer(app);
 export const handler = (event, context) => (

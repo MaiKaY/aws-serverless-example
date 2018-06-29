@@ -25,7 +25,7 @@ http://localhost:4040
 ```
 
 ## How to deploy it on AWS?
-- Change `config` values in [package.json](package.json) (at least `AWS_CF_TEMPLATE_S3_BUCKET` needs to be set)
+- Change `config` values in [package.json](package.json#L9-L13) (at least `AWS_CF_TEMPLATE_S3_BUCKET` needs to be set)
 - For first-time setup use `npm run aws:install` 
 - For further updates use `npm run aws:update`
 - To delete your application and all resources connected with it use `npm run aws:uninstall`

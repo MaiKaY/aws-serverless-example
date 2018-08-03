@@ -8,7 +8,7 @@
     ],
     "config": {
         "AWS_REGION": "eu-west-1",
-        "AWS_CF_TEMPLATE_S3_BUCKET": "PUT S3 BUCKET NAME HERE",
+        "AWS_CF_TEMPLATE_S3_BUCKET": "cf-templates-1bm0o3al53ofp-eu-west-1",
         "AWS_CF_STACK_NAME": "AWS-SERVERLESS-EXAMPLE"
     },
     "scripts": {
@@ -27,6 +27,7 @@
         }
     },
     "dependencies": {
+        "aws-sdk": "2.286.2",
         "aws-serverless-express": "3.2.0",
         "body-parser": "1.18.3",
         "cors": "2.8.4",

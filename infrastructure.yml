@@ -1,17 +1,37 @@
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
+  ImageBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: Private
+
+  ImageTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+
   ApiLambdaExecutionRole:
     Type: AWS::IAM::Role
     Properties:
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
-          - Effect: Allow
-            Principal:
-              Service: lambda.amazonaws.com
-            Action: sts:AssumeRole
+        - Effect: Allow
+          Principal:
+            Service: lambda.amazonaws.com
+          Action: sts:AssumeRole
       ManagedPolicyArns:
-        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+      - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
 
   ApiLambda:
     Type: AWS::Lambda::Function
@@ -21,6 +41,10 @@ Resources:
       Runtime: nodejs8.10
       MemorySize: 128
       Timeout: 5
+      Environment:
+        Variables:
+          BUCKET_NAME: !Ref ImageBucket
+          IMAGE_TABLE: !Ref ImageTable
 
   Api:
     Type: AWS::ApiGateway::RestApi

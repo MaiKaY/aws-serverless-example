@@ -297,6 +297,8 @@ Resources:
             Action: sts:AssumeRole
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
 
   UploadsSubscriberLambda:
     Type: AWS::Lambda::Function
@@ -306,6 +308,9 @@ Resources:
       Runtime: nodejs8.10
       MemorySize: 128
       Timeout: 10
+      Environment:
+        Variables:
+          IMAGE_TABLE: !Ref ImageTable
 
   UploadsSubscriberLambdaSubscription:
     Type: AWS::SNS::Subscription

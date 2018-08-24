@@ -17,6 +17,23 @@ Resources:
             Action: sns:Publish
             Resource: '*'
 
+  UploadsNotifier:
+    Type: AWS::SNS::Topic
+
+  UploadsNotifierPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+        - !Ref UploadsNotifier
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: '*'
+            Action: sns:Publish
+            Resource: '*'
+
   ImageBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -30,6 +47,13 @@ Resources:
                 Rules:
                   - Name: prefix
                     Value: temp/
+          - Event: s3:ObjectCreated:Put
+            Topic: !Ref UploadsNotifier
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: uploads/
 
   ImageTable:
     Type: AWS::DynamoDB::Table

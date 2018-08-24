@@ -54,7 +54,7 @@ app.get('/:imageId', cors(), async ({ params: { imageId } }, res) => {
     const {
         Item: {
             createdAt,
-            uploadedAt,
+            publishedAt,
             status,
             image
         }
@@ -68,8 +68,8 @@ app.get('/:imageId', cors(), async ({ params: { imageId } }, res) => {
     res.json({
         createdAt,
         status,
-        uploadedAt: uploadedAt || '',
-        image: image || ''
+        publishedAt: publishedAt || '',
+        image: status === 'published' ? `https://s3-eu-west-1.amazonaws.com/${BUCKET_NAME}/${image}` : ''
     });
 });
 

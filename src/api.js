@@ -45,7 +45,8 @@ app.get('/', cors(), async (req, res) => {
 
     res.json({
         imageId,
-        uploadUrl: signedUrl
+        uploadUrl: signedUrl,
+        statusUrl: `${req.protocol}://${req.headers.host}/${imageId}`
     });
 });
 

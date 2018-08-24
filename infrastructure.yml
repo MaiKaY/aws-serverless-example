@@ -9,11 +9,11 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       AttributeDefinitions:
-      - AttributeName: id
-        AttributeType: S
+        - AttributeName: id
+          AttributeType: S
       KeySchema:
-      - AttributeName: id
-        KeyType: HASH
+        - AttributeName: id
+          KeyType: HASH
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
@@ -24,14 +24,14 @@ Resources:
       AssumeRolePolicyDocument:
         Version: 2012-10-17
         Statement:
-        - Effect: Allow
-          Principal:
-            Service: lambda.amazonaws.com
-          Action: sts:AssumeRole
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
       ManagedPolicyArns:
-      - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
-      - arn:aws:iam::aws:policy/AmazonS3FullAccess
-      - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+        - arn:aws:iam::aws:policy/AmazonS3FullAccess
+        - arn:aws:iam::aws:policy/AmazonDynamoDBFullAccess
 
   ApiLambda:
     Type: AWS::Lambda::Function
@@ -86,25 +86,25 @@ Resources:
       AuthorizationType: NONE
       Integration:
         IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-            method.response.header.Access-Control-Allow-Methods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-          ResponseTemplates:
-            application/json: ''
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Methods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
         PassthroughBehavior: WHEN_NO_MATCH
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         Type: MOCK
       MethodResponses:
-      - StatusCode: 200
-        ResponseModels:
-          application/json: Empty
-        ResponseParameters:
-          method.response.header.Access-Control-Allow-Headers: false
-          method.response.header.Access-Control-Allow-Methods: false
-          method.response.header.Access-Control-Allow-Origin: false
+        - StatusCode: 200
+          ResponseModels:
+            application/json: Empty
+          ResponseParameters:
+            method.response.header.Access-Control-Allow-Headers: false
+            method.response.header.Access-Control-Allow-Methods: false
+            method.response.header.Access-Control-Allow-Origin: false
 
   ApiProxyResource:
     Type: AWS::ApiGateway::Resource
@@ -148,22 +148,22 @@ Resources:
       AuthorizationType: NONE
       Integration:
         IntegrationResponses:
-        - StatusCode: 200
-          ResponseParameters:
-            method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
-            method.response.header.Access-Control-Allow-Methods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
-            method.response.header.Access-Control-Allow-Origin: "'*'"
-          ResponseTemplates:
-            application/json: ''
+          - StatusCode: 200
+            ResponseParameters:
+              method.response.header.Access-Control-Allow-Headers: "'Content-Type,X-Amz-Date,Authorization,X-Api-Key,X-Amz-Security-Token'"
+              method.response.header.Access-Control-Allow-Methods: "'DELETE,GET,HEAD,OPTIONS,PATCH,POST,PUT'"
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+            ResponseTemplates:
+              application/json: ''
         PassthroughBehavior: WHEN_NO_MATCH
         RequestTemplates:
           application/json: '{"statusCode": 200}'
         Type: MOCK
       MethodResponses:
-      - StatusCode: 200
-        ResponseModels:
-          application/json: Empty
-        ResponseParameters:
+        - StatusCode: 200
+          ResponseModels:
+            application/json: Empty
+          ResponseParameters:
             method.response.header.Access-Control-Allow-Headers: false
             method.response.header.Access-Control-Allow-Methods: false
             method.response.header.Access-Control-Allow-Origin: false

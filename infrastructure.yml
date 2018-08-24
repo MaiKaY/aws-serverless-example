@@ -285,6 +285,43 @@ Resources:
       Principal: sns.amazonaws.com
       SourceArn: !Ref PutObjectNotifier
 
+  UploadsSubscriberLambdaExecutionRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service: lambda.amazonaws.com
+            Action: sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+  UploadsSubscriberLambda:
+    Type: AWS::Lambda::Function
+    Properties:
+      Handler: dist/src/uploads-subscriber-lambda.handler
+      Role: !GetAtt UploadsSubscriberLambdaExecutionRole.Arn
+      Runtime: nodejs8.10
+      MemorySize: 128
+      Timeout: 10
+
+  UploadsSubscriberLambdaSubscription:
+    Type: AWS::SNS::Subscription
+    Properties:
+      Endpoint: !GetAtt UploadsSubscriberLambda.Arn
+      Protocol: lambda
+      TopicArn: !Ref UploadsNotifier
+
+  UploadsSubscriberLambdaSubscriptionPermission:
+    Type: AWS::Lambda::Permission
+    Properties:
+      Action: lambda:InvokeFunction
+      FunctionName: !GetAtt UploadsSubscriberLambda.Arn
+      Principal: sns.amazonaws.com
+      SourceArn: !Ref UploadsNotifier
+
 Outputs:
   ApiEndpoint:
     Value: !Sub https://${Api}.execute-api.${AWS::Region}.${AWS::URLSuffix}/${ApiStage}

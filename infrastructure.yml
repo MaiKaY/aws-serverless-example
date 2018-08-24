@@ -1,9 +1,35 @@
 AWSTemplateFormatVersion: 2010-09-09
 Resources:
+  PutObjectNotifier:
+    Type: AWS::SNS::Topic
+
+  PutObjectNotifierPolicy:
+    Type: AWS::SNS::TopicPolicy
+    Properties:
+      Topics:
+        - !Ref PutObjectNotifier
+      PolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              AWS: '*'
+            Action: sns:Publish
+            Resource: '*'
+
   ImageBucket:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: Private
+      NotificationConfiguration:
+        TopicConfigurations:
+          - Event: s3:ObjectCreated:Put
+            Topic: !Ref PutObjectNotifier
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: temp/
 
   ImageTable:
     Type: AWS::DynamoDB::Table

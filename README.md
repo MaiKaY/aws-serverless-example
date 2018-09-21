@@ -1,7 +1,7 @@
 # AWS Serverless Example
 This repository is about an article series I wrote on [medium.com](https://medium.com/@maikschmidt).
 - [Part 1: Create a simple API and ship it to AWS](https://medium.com/@maikschmidt/building-a-serverless-application-on-aws-part-1-create-a-simple-api-and-ship-it-to-aws-8cc85247be42) ([GitHub Branch](https://github.com/MaiKaY/aws-serverless-example/tree/part-1))
-- Part 2 (tbd): Create a DynamoDB table and store data
+- [Part 2: Create a DynamoDB table and store data](https://medium.com/@maikschmidt/building-a-serverless-application-on-aws-part-2-create-a-dynamodb-table-and-store-data-6ee8c25c1610)
 - Part 3 (tbd): Validate incoming images and create thumbnails from them
 - Part 4 (tbd): Implement basic usage of Event-Sourcing and create SNS event publisher
 - Part 5 (tbd): Create a simple CI/CD pipeline

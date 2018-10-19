@@ -33,7 +33,7 @@ export const handler = async (event, context, callback) => {
     } = originalEvent.Records[0].s3;
 
     // Do not create thumbnails of thumbnails :-)
-    // Wildcards in prefix filters of S3 events are not supported, therefore this small check
+    // Wildcards in prefix filters of S3 events are not supported, yet.
     if (!objectKey.includes('original')) {
         callback(null, 'Done.');
         return;

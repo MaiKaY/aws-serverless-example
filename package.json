@@ -8,7 +8,7 @@
     ],
     "config": {
         "AWS_REGION": "eu-west-1",
-        "AWS_CF_TEMPLATE_S3_BUCKET": "cf-templates-1bm0o3al53ofp-eu-west-1",
+        "AWS_CF_TEMPLATE_S3_BUCKET": "PUT S3 BUCKET NAME HERE",
         "AWS_CF_STACK_NAME": "AWS-SERVERLESS-EXAMPLE"
     },
     "scripts": {

@@ -38,6 +38,11 @@ Resources:
     Type: AWS::S3::Bucket
     Properties:
       AccessControl: Private
+      LifecycleConfiguration:
+        Rules:
+          - Prefix: temp/
+            Status: Enabled
+            ExpirationInDays: 1
       NotificationConfiguration:
         TopicConfigurations:
           - Event: s3:ObjectCreated:Put

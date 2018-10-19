@@ -30,7 +30,7 @@ export const handler = async (event, context, callback) => {
     if (validContentTypes.some(validContentType => validContentType === mime)) {
         await s3.putObject({
             Bucket: bucketName,
-            Key: `uploads/${imageId}/${imageId}.${ext}`,
+            Key: `uploads/${imageId}/original.${ext}`,
             Body,
             ACL: 'public-read',
             ContentType: mime,

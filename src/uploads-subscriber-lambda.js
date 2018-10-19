@@ -52,7 +52,7 @@ export const handler = async (event, context, callback) => {
                 }
                 s3.putObject({
                     Bucket: bucketName,
-                    Key: `thumbnails/${imageId}/${thumbnail.name}.${extension}`,
+                    Key: `thumbnails/${imageId}/${thumbnail.name}${extension}`,
                     Body: Buffer.from(resizeData, 'binary'),
                     ACL: 'public-read',
                     ContentType,

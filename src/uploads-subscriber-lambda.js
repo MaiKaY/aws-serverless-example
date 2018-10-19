@@ -32,6 +32,13 @@ export const handler = async (event, context, callback) => {
         object: { key: objectKey }
     } = originalEvent.Records[0].s3;
 
+    // Do not create thumbnails of thumbnails :-)
+    // Wildcards in prefix filters of S3 events are not supported, therefore this small check
+    if (!objectKey.includes('original')) {
+        callback(null, 'Done.');
+        return;
+    }
+
     const { Body, ContentType, Metadata } = await s3.getObject({
         Bucket: bucketName,
         Key: objectKey
@@ -52,7 +59,7 @@ export const handler = async (event, context, callback) => {
                 }
                 s3.putObject({
                     Bucket: bucketName,
-                    Key: `thumbnails/${imageId}/${thumbnail.name}${extension}`,
+                    Key: `uploads/${imageId}/${thumbnail.name}${extension}`,
                     Body: Buffer.from(resizeData, 'binary'),
                     ACL: 'public-read',
                     ContentType,
